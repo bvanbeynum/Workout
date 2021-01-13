@@ -1,0 +1,19 @@
+.navContainer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: white;
+}
+
+.navContainer .item {
+	cursor: pointer;
+}
+
+.navContainer .item svg {
+	height: 30px;
+}

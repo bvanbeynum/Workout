@@ -1,0 +1,256 @@
+.workoutPage {
+	color: rgb(87, 87, 97);
+}
+
+.workoutPage .loading {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.workoutPage h1 {
+	margin: 20px 10px;
+	font-size: 38px;
+	transition: all .3s ease-out;
+}
+
+.workoutPage h1.hidden {
+	margin-top: -65px;
+	transition: all .3s ease-in;
+}
+
+.workoutPage .workoutCard {
+	display: none;
+	flex-direction: column;
+	background: linear-gradient(135deg, rgb(237,77,28) 0%,rgb(193,57,23) 28%,rgb(165,53,19) 100%);
+	color: rgb(252 248 246);
+	margin: 0px 5px 10px 5px;
+	padding: 10px 15px;
+}
+
+.workoutPage .workoutCard.active {
+	display: flex;
+	margin: 0px 0px 10px 0px;
+}
+
+.workoutPage .cardContent {
+	display: flex;
+}
+
+.workoutPage .cardDetails {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.workoutPage .cardAction svg {
+	fill: rgb(252 248 246);
+	border: 2px solid rgb(252 248 246);
+	width: 15px;
+	border-radius: 30px;
+	padding: 7px;
+	margin: 18px 16px 0px 0px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.workoutPage .cardHeader {
+	font-size: 25px;
+}
+
+.workoutPage .cardHeader input[type="text"] {
+	background-color: rgb(0 0 0 / 0%);
+	border: 0px;
+	font-size: 25px;
+	font-family: "Jura", sans-serif;
+	color: rgb(252 248 246);
+	border-bottom: 1px solid rgb(252 248 246);
+}
+
+.workoutPage .cardSubHeader {
+	display: flex;
+	margin: 5px 0px 0px 10px;
+	align-items: center;
+}
+
+.workoutPage .data {
+	margin: 0px 5px;
+	color: rgb(255 162 132);
+}
+
+.workoutPage .timelineContainer {
+	display: flex;
+	margin-top: 20px;
+}
+
+.workoutPage .timelineDate {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	text-align: center;
+}
+
+.workoutPage .timelineCount {
+	color: rgb(255 162 132);
+}
+
+.workoutPage .addWorkout {
+	font-size: 55px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px 0px;
+	cursor: pointer;
+	user-select: none;
+}
+.workoutPage .setsList {
+	display: none;
+	flex-direction: column;
+}
+
+.workoutPage .setsList.active {
+	display: flex;
+}
+
+.workoutPage .setContainer {
+	display: flex;
+	padding: 0px 15px;
+}
+
+.workoutPage .setContainer:nth-last-child(1) {
+	margin-bottom: 100px;
+}
+
+.workoutPage .setTimeline {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.workoutPage .timelineLine {
+	flex: 1;
+	width: 3px;
+	background-color: rgb(245 81 28);
+}
+
+.workoutPage .timelineLine.hidden {
+	background-color: rgb(0 0 0 / 0%);
+}
+
+.workoutPage .setNumber {
+	border: 2px solid rgb(245 81 28);
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	border-radius: 33px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.workoutPage .setDetails {
+	margin: 10px 0px 10px 25px;
+	flex: 1;
+}
+
+.workoutPage .setSettings {
+	display: flex;
+	margin: 10px 0px;
+	justify-content: space-around;
+}
+
+.workoutPage .setName select {
+	font-family: "Jura", sans-serif;
+	font-size: 15px;
+	border: 0;
+	background-color: rgb(0 0 0 / 0%);
+	color: rgb(87, 87, 97);
+}
+
+.workoutPage .repsContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.workoutPage .reps {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	flex: 1;
+}
+
+.workoutPage .repsNumber {
+	width: 18px;
+	text-align: center;
+}
+
+.workoutPage .editButton {
+	border: 1px solid rgb(245 81 28);
+	border-radius: 16px;
+	width: 20px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	cursor: pointer;
+	user-select: none;
+	margin: 0px 6px;
+}
+
+.workoutPage .weightContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.workoutPage .weightContainer.hidden {
+	visibility: hidden;
+}
+
+.workoutPage .weights {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	flex: 1;
+}
+
+.workoutPage .weight {
+	width: 20px;
+	height: 20px;
+	border: 1px solid rgb(245 81 28);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 17px;
+	margin: 0px 5px;
+	font-size: 10px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.workoutPage .weight.active {
+	background-color: rgb(255 194 173);
+	font-weight: bold;
+}
+
+.workoutPage .restContainer {
+	display: flex;
+	align-items: center;
+}
+
+.workoutPage .restLine {
+	flex: 1;
+	background-color: rgb(245 81 28);
+	height: 1px;
+}
+
+.workoutPage .restNumber {
+	width: 18px;
+	text-align: center;
+}

@@ -1,0 +1,310 @@
+.activityPage  {
+	color: rgb(87, 87, 97);
+}
+
+.activityPage .row  {
+	display: flex;
+}
+
+.activityPage .loading {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.activityPage .cardContainer:nth-last-child(1) {
+	margin-bottom: 150px;
+}
+
+.activityPage .activityCard {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(135deg, rgb(237,77,28) 0%,rgb(193,57,23) 28%,rgb(165,53,19) 100%);
+	color: rgb(252 248 246);
+	margin: 0px 0px 10px 0px;
+	padding: 10px 15px;
+}
+
+.activityPage .cardContent {
+	display: flex;
+	flex-direction: column;
+}
+
+.activityPage .cardHeader {
+	font-size: 25px;
+	margin-bottom: 10px;
+}
+
+.activityPage .cardInfo {
+	display: flex;
+	align-items: center;
+	margin-left: 15px;
+}
+
+.activityPage .cardData {
+	margin: 0px 5px;
+	color: rgb(255 162 132);
+}
+
+.activityPage .cardRemaining {
+	width: 65px;
+	fill: rgb(252 248 246);
+	display: flex;
+	justify-content: center;
+}
+
+.activityPage .cardRemaining svg {
+	flex: 1;
+}
+
+.activityPage .workoutAction {
+	cursor: pointer;
+	user-select: none;
+	height: 50px;
+}
+
+.activityPage .cardRemaining circle {
+	fill: rgb(0 0 0 / 0%);
+	stroke: rgb(252 248 246);
+}
+
+.activityPage .setContainer {
+	display: flex;
+	padding: 0px 15px;
+}
+
+.activityPage .setTimeline {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30px;
+}
+
+.activityPage .timelineLine {
+	flex: 1;
+	width: 3px;
+	background-color: rgb(245 81 28);
+}
+
+.activityPage .timelineLine.hidden {
+	background-color: rgb(0 0 0 / 0%);
+}
+
+.activityPage .timeLineRest {
+	background-color: rgb(245 81 28);
+	width: 15px;
+	height: 15px;
+	border-radius: 10px;
+}
+
+.activityPage .setNumber {
+	border: 2px solid rgb(245 81 28);
+	width: 30px;
+	height: 30px;
+	text-align: center;
+	border-radius: 33px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.activityPage .setCard {
+	margin: 10px 0px 10px 15px;
+	flex: 1;
+	display: flex;
+	padding: 0px 10px;
+}
+
+.activityPage .setCard.active {
+	background: linear-gradient(135deg, rgb(237,77,28) 0%,rgb(193,57,23) 28%,rgb(165,53,19) 100%);
+	color: rgb(252 248 246);
+	padding: 10px;
+	box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.30);
+	height: 233px;
+}
+
+.activityPage .setCardContainer {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.activityPage .setNameActive {
+	margin-bottom: 5px;
+	font-size: 26px;
+}
+
+.activityPage .maxContainer {
+	display: flex;
+}
+
+.activityPage .setAction {
+	width: 40px;
+	fill: rgb(245 81 28);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 35px;
+}
+
+.activityPage .setAction.complete {
+	fill: rgb(22 165 84);
+}
+
+.activityPage .setAction svg {
+	cursor: pointer;
+	user-select: none;
+}
+
+.activityPage .setActionActive {
+	width: 35px;
+}
+
+.activityPage .setActionActive svg {
+	fill: rgb(252 248 246);
+	cursor: pointer;
+	user-select: none;
+}
+
+.activityPage .cardInfo.hidden {
+	visibility: hidden;
+}
+
+.activityPage .weights {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	flex: 1;
+}
+
+.activityPage .weight {
+	width: 20px;
+	height: 20px;
+	border: 1px solid rgb(245 81 28);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 17px;
+	margin: 5px 10px 0px 0px;
+	font-size: 10px;
+}
+
+.activityPage .weight.active {
+	background-color: rgb(255 194 173);
+	font-weight: bold;
+}
+
+.activityPage .repsContainerActive {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px 0px 5px 0px;
+	flex: 1;
+	justify-content: center;
+}
+
+.activityPage .repsActive {
+	display: flex;
+	font-size: 30px;
+}
+
+.activityPage .repsNumber {
+	width: 45px;
+	text-align: center;
+}
+
+.activityPage .editButton {
+	margin: 0px 20px;
+	border: solid 2px rgb(252 248 246);
+	width: 35px;
+	height: 35px;
+	border-radius: 41px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	user-select: none;
+}
+
+.activityPage .weightContainerActive {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 5px 0px;
+}
+
+.activityPage .weightsActive {
+	display: flex;
+	font-size: 20px;
+	margin: 10px 0px;
+}
+
+.activityPage .weightActive {
+	width: 35px;
+	height: 35px;
+	border: 2px solid rgb(252 248 246);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 30px;
+	margin: 0px 5px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.activityPage .weightActive.active {
+	background-color: rgb(252 248 246);
+	color: rgb(87, 87, 97);
+}
+
+.activityPage .restContainerActive {
+	flex: 1;
+}
+
+.activityPage .restCountdown {
+	background: linear-gradient(135deg, rgb(237,77,28) 0%,rgb(193,57,23) 28%,rgb(165,53,19) 100%);
+	color: rgb(252 248 246);
+	padding: 10px;
+	box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.30);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.activityPage .restCountdown svg {
+	width: 213px;
+}
+
+.activityPage .restCountdown circle {
+	fill: rgb(0 0 0 / 0%);
+	stroke: rgb(252 248 246);
+	stroke-width: 1px;
+}
+
+.activityPage .restCountdown text {
+	font-size: 8px;
+	fill: rgb(252 248 246);
+}
+
+.activityPage .restContainer {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	margin: 10px 0px;
+}
+
+.activityPage .restLine {
+	flex: 1;
+	background-color: rgb(245 81 28);
+	height: 1px;
+}
+
+.activityPage .restNumber {
+	width: 18px;
+	text-align: center;
+}

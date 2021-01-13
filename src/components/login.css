@@ -1,0 +1,42 @@
+.loginPage {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.loginPage .icon {
+	width: 140px;
+	margin: 20px;
+}
+
+.loginPage .icon path {
+	fill: rgb(118 185 0);
+	stroke: rgb(40 151 40);
+	stroke-width: 0.5px;
+}
+
+.loginPage .content {
+	width: 400px;
+	margin: 20px;
+	color: rgb(132 133 137);
+}
+
+.loginPage button {
+	margin: 20px;
+	padding: 13px 40px;
+	background-color: rgb(40 151 40);
+	border-radius: 5px;
+	border: 0;
+	color: rgb(226 226 226);
+	font-weight: bold;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.loginPage .update {
+	margin: 20px;
+	color: #FF7200;
+	font-weight: bold;
+}

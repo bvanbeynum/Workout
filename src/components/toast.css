@@ -1,0 +1,26 @@
+.toast {
+	border: solid 1px rgb(245 81 28);
+	background-color: rgb(239 176 156);
+	color: rgb(87, 87, 97);
+	position: absolute;
+	font-weight: bold;
+	font-size: 14px;
+	bottom: 90px;
+	right: 3%;
+	padding: 8px 15px;
+	display: none;
+}
+.toast.isActive {
+	display: flex;
+}
+
+.toast.info {
+	border: solid 1px rgb(245 81 28);
+	background-color: rgb(239 176 156);
+	color: rgb(87, 87, 97);
+}
+.toast.error {
+	border: solid 1px rgb(245 81 28);
+	background-color: rgb(239 176 156);
+	color: rgb(87, 87, 97);
+}

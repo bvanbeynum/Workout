@@ -1,0 +1,68 @@
+.schedulePage {
+	color: rgb(87, 87, 97);
+}
+
+.schedulePage .row {
+	display: flex;
+}
+
+.schedulePage .button {
+	cursor: pointer;
+	user-select: none;
+}
+
+.schedulePage .loading {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.schedulePage h1 {
+	margin: 20px 10px;
+	font-size: 38px;
+	transition: all .3s ease-out;
+}
+
+.schedulePage .monthHeader {
+	display: flex;
+	background-color: rgb(245, 81, 28);
+	padding: 10px 20px;
+	justify-content: space-between;
+	color: rgb(252 248 246);
+	font-size: 21px;
+}
+
+.schedulePage .week {
+	justify-content: space-around;
+	margin: 19px 0px;
+	cursor: pointer;
+}
+
+.schedulePage .date.today {
+	background-color: rgb(216 216 216);
+}
+
+.schedulePage .week.weekHighlight {
+	background-color: rgb(201 231 255);
+	border-radius: 20px;
+	margin: 19px 14px;
+}
+
+.schedulePage .date.weekKey {
+	background-color: rgb(2 71 255);
+	color: rgb(252 248 246);
+	margin-left: -18px;
+	margin-right: -18px;
+}
+
+.schedulePage .date {
+	width: 30px;
+	height: 30px;
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+}
