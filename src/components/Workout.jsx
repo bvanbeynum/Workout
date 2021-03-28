@@ -1,3 +1,6 @@
+// eslint-disable-next-line
+/* global fetch */
+
 import React from "react";
 import "./workout.css";
 import loadingImage from "../media/loading.gif";

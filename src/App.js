@@ -1,11 +1,14 @@
+// eslint-disable-next-line
+/* global fetch */
+
 import React from "react";
 import Login from "./components/Login";
 import Nav from "./components/Nav";
-import Main from "./components/Main";
+import Home from "./components/Home";
 import Workout from "./components/Workout";
 import Schedule from "./components/Schedule";
+import WorkoutActivity from "./components/WorkoutActivity";
 import Activity from "./components/Activity";
-import Admin from "./components/Admin";
 import Toast from "./components/Toast";
 
 class App extends React.Component {
@@ -51,7 +54,8 @@ class App extends React.Component {
 				
 				this.setState({
 					isLoggedIn: data.loggedIn,
-					page: data.loggedIn ? <Main toast={this.showToast} /> : <Login toast={this.showToast} />,
+					user: data.user,
+					page: data.loggedIn ? <Home startWorkout={this.startWorkout} toast={this.showToast} user={ data.user } /> : <Login toast={this.showToast} />,
 					isLoading: false
 				});
 				
@@ -66,11 +70,15 @@ class App extends React.Component {
 		if (this.state.isLoggedIn) {
 			switch (page) {
 				case "home":
-					this.setState({ page: <Main toast={this.showToast} /> });
+					this.setState({ page: <Home startWorkout={this.startWorkout} toast={this.showToast} user={ this.state.user } /> });
 					break;
 				
 				case "workout":
 					this.setState({ page: <Workout startActivity={this.startActivity} toast={this.showToast} /> });
+					break;
+				
+				case "workoutactivity":
+					this.setState({ page: <WorkoutActivity workoutId={ this.state.currentWorkout } activityComplete={this.activityComplete} toast={ this.showToast } /> });
 					break;
 				
 				case "activity":
@@ -79,10 +87,6 @@ class App extends React.Component {
 				
 				case "schedule":
 					this.setState({ page: <Schedule toast={this.showToast} /> });
-					break;
-				
-				case "admin":
-					this.setState({ page: <Admin toast={this.showToast} /> });
 					break;
 				
 				default:
@@ -97,6 +101,12 @@ class App extends React.Component {
 		}),
 		() => { this.changePage("activity"); }
 		);
+	}
+	
+	startWorkout = workoutId => {
+		this.setState({
+			currentWorkout: workoutId
+		}, () => { this.changePage("workoutactivity") });
 	}
 	
 	activityComplete = () => {

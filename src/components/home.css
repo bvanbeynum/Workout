@@ -1,0 +1,117 @@
+.workoutsContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	flex: 1;
+	margin: 0px 10px;
+}
+
+.workoutContainer {
+	margin: 10px 0px;
+	border: solid 1px;
+	border-radius: 20px;
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	min-width: 500px;
+}
+
+.headerContainer {
+	display: flex;
+	align-items: center;
+}
+
+.itemBar {
+	width: 6px;
+	border-radius: 6px;
+	margin-right: 10px;
+	height: 100%;
+}
+
+.dataContainer {
+	flex: 1;
+}
+
+.workoutHeader {
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+.workoutSubHeader {
+	font-size: .9em;
+	color: rgb(87 87 97);
+}
+
+.actionButton {
+	margin: 0px 15px;
+	cursor: pointer;
+	outline: none;
+}
+
+.detailContainer {
+	display: none;
+	margin-top: 20px;
+	border-top: solid 1px rgb(200,200,200);
+	padding-top: 20px;
+	justify-content: space-between;
+}
+
+.detailContainer.active {
+	display: flex;
+}
+
+.exerciseTable {
+	background-color: rgb(224 244 244);
+	padding: 12px 25px;
+	font-size: .9em;
+	border-radius: 15px;
+	color: rgb(100 168 168);
+}
+
+.scheduleTable {
+	border-collapse: collapse;
+}
+
+th, td {
+	font-size: .9em;
+	font-weight: normal;
+	padding: 0px;
+	text-align: center;
+	width: 20px;
+	height: 20px;
+}
+
+th {
+	color: rgb(150 150 150);
+}
+
+td {
+	border-bottom: 1px solid rgb(220 220 220);
+}
+
+tr:nth-last-child(1) > td {
+	border-bottom: none;
+}
+
+td:nth-child(1) {
+	text-align: left;
+	color: rgb(150 150 150);
+	border-bottom: none;
+	padding-right: 10px;
+	font-size: .8em;
+}
+
+td:nth-child(n+2) {
+	font-size: 1.1em;
+	font-weight: bold;
+	color: rgb(245 92 39);
+}
+
+.today {
+	background-color: rgb(47 102 219);
+	border-radius: 10px;
+	color: rgb(255 255 255);
+	width: 50%;
+	height: 50%;
+	margin: auto;
+}

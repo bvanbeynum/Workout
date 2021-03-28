@@ -59,7 +59,7 @@ class Activity extends React.Component {
 				console.warn(error);
 				this.props.toast("Error loading workout", true);
 			});
-		
+			
 			var Util={};
 			Util.base64 = function(mimeType, base64) {
 				return "data:" + mimeType + ";base64," + base64;
