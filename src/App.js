@@ -48,7 +48,8 @@ class App extends React.Component {
 	}
 	
 	componentDidMount() {
-		fetch("http://workout.beynum.com/workout/api/appload", { credentials: "include" })
+		
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/appload`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				
@@ -63,7 +64,7 @@ class App extends React.Component {
 	}
 	
 	componentDidCatch(error, info) {
-		fetch("http://workout.beynum.com/workout/api/errorsave", { method: "post", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({error: { error: error, info: info } }) });
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/errorsave`, { method: "post", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({error: { error: error, info: info } }) });
 	}
 	
 	changePage = (page) => {

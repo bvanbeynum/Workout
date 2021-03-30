@@ -5,7 +5,7 @@ const Login = (props) => {
 	const[update, setUpdate] = useState("");
 	
 	const requestAccess = () => {
-		fetch("http://workout.beynum.com/workout/api/requestaccess", { credentials: "include" })
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/requestaccess`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				setUpdate("Access Requested");

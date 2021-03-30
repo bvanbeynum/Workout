@@ -41,7 +41,7 @@ class Workout extends React.Component {
 	}
 	
 	componentDidMount() {
-		fetch("http://workout.beynum.com/workout/api/workoutload", { credentials: "include" })
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/workoutload`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				
@@ -86,7 +86,7 @@ class Workout extends React.Component {
 			name: "New Workout"
 		};
 		
-		fetch("http://workout.beynum.com/workout/api/workoutsave", { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ workout: newWorkout }) })
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/workoutsave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ workout: newWorkout }) })
 			.then(response => response.json())
 			.then(data => {
 				newWorkout.id = data.id;
@@ -106,7 +106,7 @@ class Workout extends React.Component {
 	}
 	
 	deleteWorkout = workoutIndex => event => {
-		fetch("http://workout.beynum.com/workout/api/workoutdelete?id=" + this.state.workouts[workoutIndex].id, { credentials: "include" })
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/workoutdelete?id=${this.state.workouts[workoutIndex].id}`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				this.setState(({workouts}) => ({
@@ -126,7 +126,7 @@ class Workout extends React.Component {
 	}
 	
 	saveWorkout = workoutIndex => event => {
-		fetch("http://workout.beynum.com/workout/api/workoutsave", { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ workout: this.state.workouts[workoutIndex] }) })
+		fetch(`http://${process.env.REACT_APP_API_HOST}/api/workoutsave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ workout: this.state.workouts[workoutIndex] }) })
 			.then(response => response.json())
 			.then(data => {
 				this.setState(({workouts}) => ({
