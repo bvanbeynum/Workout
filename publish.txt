@@ -1,0 +1,2 @@
+cp -rf build/* -t ../../prod/workout/client/
+rm -rf build/*

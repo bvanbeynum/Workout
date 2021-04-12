@@ -34,7 +34,7 @@ class Home extends React.Component {
 	}
 	
 	componentDidMount() {
-		fetch(`http://${process.env.REACT_APP_API_HOST}/api/homeload`, { credentials: "include" })
+		fetch(`http://workout.beynum.com/api/homeload`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				

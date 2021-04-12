@@ -13,7 +13,8 @@ class WorkoutActivity extends React.Component {
 		
 		this.state = {
 			isLoading: true,
-			countDown: { min: 0, sec: 0 },
+			isSaving: false,
+			countDown: { min: 0, sec: 0, startTime: new Date() },
 			workout: { id: this.props.workoutId }
 		};
 	
@@ -25,13 +26,18 @@ class WorkoutActivity extends React.Component {
 	
 	componentDidMount() {
 		
-		fetch(`http://${process.env.REACT_APP_API_HOST}/api/activityload?id=${this.state.workout.id}`, { credentials: "include" })
+		fetch(`http://workout.beynum.com/api/activityload?id=${this.state.workout.id}`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				const workout = data.workout;
 				
 				let exercises = data.exercises.map(exercise => {
-					const graphDates = [...new Set(exercise.activities.map(activity => +(new Date(activity.runDateOnly))))];
+					const graphDates = [...new Set(
+						exercise.activities
+							.map(activity => +(new Date(activity.runDateOnly)))
+							.sort((dateA, dateB) => dateB - dateA)
+							.slice(0, 7)
+						)];
 					
 					const days = graphDates.map((date, dateIndex) => ({
 						date: ((new Date(date)).getMonth() + 1) + "/" + (new Date(date)).getDate(),
@@ -167,10 +173,17 @@ class WorkoutActivity extends React.Component {
 		this.video.appendChild(source2);
 		
 	}
+
+	componentWillUnmount() {
+		if (this.state.restInterval) {
+			this.video.pause();
+			clearInterval(this.state.restInterval);
+		}
+	}
 	
 	completeSet = setIndex => {
-		
 		if (this.state.restInterval) {
+			this.video.pause();
 			clearInterval(this.state.restInterval);
 		}
 		
@@ -186,6 +199,8 @@ class WorkoutActivity extends React.Component {
 			countDown: { 
 				min: setIndex < workout.sets.length ? Math.floor(workout.sets[setIndex].rest / 60) : 0,
 				sec: setIndex < workout.sets.length ? Math.floor(workout.sets[setIndex].rest % 60) : 0,
+				startTime: new Date(),
+				restTime: workout.sets[setIndex].rest,
 				canPlayReady: true,
 				canPlayCountdown: true
 			}
@@ -252,31 +267,44 @@ class WorkoutActivity extends React.Component {
 	}
 	
 	saveActivity = () => {
-		const activity = {
-			workoutId: this.state.workout.id,
-			runDate: new Date(),
-			sets: this.state.workout.sets
-				.filter(workoutSet => workoutSet.isComplete)
-				.map(workoutSet => ({
-					exercise: {
-						id: workoutSet.exercise.id,
-						name: workoutSet.exercise.name,
-						category: workoutSet.exercise.category
-					},
-					reps: workoutSet.reps,
-					weight: workoutSet.weight
-				}))
-		};
-		
-		fetch(`http://${process.env.REACT_APP_API_HOST}/api/activitysave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ activity: activity }) })
-			.then(response => response.json())
-			.then(data => {
-				this.props.activityComplete();
-			})
-			.catch(error => {
-				console.warn(error);
-				this.props.toast("Error updating workout", true);
-			});
+		if (this.state.isSaving) {
+			return;
+		}
+
+		if (this.state.restInterval) {
+			clearInterval(this.state.restInterval);
+		}
+
+		this.setState({
+			isSaving: true
+		},
+		() => {
+			const activity = {
+				workoutId: this.state.workout.id,
+				runDate: new Date(),
+				sets: this.state.workout.sets
+					.filter(workoutSet => workoutSet.isComplete)
+					.map(workoutSet => ({
+						exercise: {
+							id: workoutSet.exercise.id,
+							name: workoutSet.exercise.name,
+							category: workoutSet.exercise.category
+						},
+						reps: workoutSet.reps,
+						weight: workoutSet.weight
+					}))
+			};
+			
+			fetch(`http://workout.beynum.com/api/activitysave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ activity: activity }) })
+				.then(response => response.json())
+				.then(data => {
+					this.props.activityComplete();
+				})
+				.catch(error => {
+					console.warn(error);
+					this.props.toast("Error updating workout", true);
+				});
+		});
 	}
 	
 	editReps = (setIndex, newReps) => {
@@ -339,8 +367,16 @@ class WorkoutActivity extends React.Component {
 	
 	updateTime = () => {
 		let sec = this.state.countDown.sec,
-			min = this.state.countDown.min;
-			
+			min = this.state.countDown.min,
+			timerDiff = this.state.countDown.restTime - ((min * 60) + sec),
+			timeDiff = Math.floor((new Date() - this.state.countDown.startTime) / 1000);
+		
+		if (timeDiff - timerDiff > 3) {
+			let remaining = this.state.countDown.restTime - timeDiff;
+			min = Math.floor(remaining / 60);
+			sec = Math.floor(remaining % 60);
+		}
+
 		if (sec > 0) {
 			sec--;
 		}
@@ -367,8 +403,7 @@ class WorkoutActivity extends React.Component {
 			
 			this.video.pause();
 		}
-		else if (this.state.countDown.canPlayReady && min <= 0 && sec <= 30 && sec > 28) {
-			console.log("ready");
+		else if (this.state.countDown.canPlayReady && min <= 0 && sec <= 30) {
 			// Play get ready
 			this.readyAudio.play();
 			this.setState(({countDown}) => ({ 
@@ -379,7 +414,6 @@ class WorkoutActivity extends React.Component {
 			}));
 		}
 		else if (this.state.countDown.canPlayCountdown && min <= 0 && sec <= 3) {
-			console.log("countdown");
 			// PlayCountdown
 			this.countdownAudio.play();
 			this.setState(({countDown}) => ({ 
@@ -412,18 +446,18 @@ class WorkoutActivity extends React.Component {
 			:
 				<div className="pageContainer">
 					<div className="horizontalContainer">
-						{
-						this.state.workout.sets.some(workoutSet => workoutSet.isComplete) ?
 						
-						<div className="headerButton">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="workoutAction" onClick={ this.saveActivity }>
+						<div 
+							{...(!this.state.isSaving && this.state.workout.sets.some(workoutSet => workoutSet.isComplete) && { onClick: this.saveActivity }) } 
+							className={`headerButton ${ this.state.isSaving || !this.state.workout.sets.some(workoutSet => workoutSet.isComplete) ? "disabled" : "" }`}>
+							
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="workoutAction">
 								<path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
 							</svg>
 						</div>
-						: ""
-						}
 						
 						<h1>Workout { this.state.workout.name }</h1>
+
 					</div>
 					
 					<div className="setsContainer">	

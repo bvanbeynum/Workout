@@ -67,6 +67,7 @@
 	font-weight: bold;
 	font-family: "Jura", sans-serif;
 	border: none;
+	background-color: rgb(0 0 0 / 0%);
 }
 
 .subHeader {
@@ -188,4 +189,12 @@
 .setActionButton svg, .setComplete svg, .headerButton svg {
 	fill: rgb(238, 69, 105);
 	width: 36px;
+}
+
+.headerButton.disabled {
+	cursor: not-allowed;
+}
+
+.headerButton.disabled svg {
+	fill: rgb(179 179 179);
 }

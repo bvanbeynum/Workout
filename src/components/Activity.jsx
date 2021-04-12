@@ -41,7 +41,7 @@ class Activity extends React.Component {
 	}
 	
 	componentDidMount() {
-		fetch(`http://${process.env.REACT_APP_API_HOST}/api/activityload?id=${this.state.workout.id}`, { credentials: "include" })
+		fetch(`http://workout.beynum.com/api/activityload?id=${this.state.workout.id}`, { credentials: "include" })
 			.then(response => response.json())
 			.then(data => {
 				let workout = data.workout;
@@ -221,7 +221,11 @@ class Activity extends React.Component {
 	}
 	
 	saveActivity = event => {
-		fetch(`http://${process.env.REACT_APP_API_HOST}/api/activitysave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ activity: this.state.activity }) })
+		this.setState({
+			isLoading: true
+		});
+
+		fetch(`http://workout.beynum.com/api/activitysave`, { method: "post", headers: {"Content-Type": "application/json"}, credentials: "include", body: JSON.stringify({ activity: this.state.activity }) })
 			.then(response => response.json())
 			.then(data => {
 				this.props.activityComplete();
