@@ -32,109 +32,39 @@ class WorkoutActivity extends React.Component {
 				const workout = data.workout;
 				
 				let exercises = data.exercises.map(exercise => {
-					const graphDates = [...new Set(
-						exercise.activities
-							.map(activity => +(new Date(activity.runDateOnly)))
-							.sort((dateA, dateB) => dateB - dateA)
-							.slice(0, 7)
-						)];
+					const series = [...new Set(exercise.activities.map(activity => exercise.hasWeight ? activity.weight : activity.reps))]
+							.map(category => ({
+								value: category,
+								activities: exercise.activities
+									.filter(activity => exercise.hasWeight ? activity.weight === category : activity.reps === category),
+								lastRun: exercise.activities
+									.filter(activity => exercise.hasWeight ? activity.weight === category : activity.reps === category)
+									.map(activity => new Date(activity.runDate))
+									.sort((activityA, activityB) => activityB - activityA)[0]
+							}))
+							.sort((categoryA, categoryB) => +categoryB.lastRun - categoryA.lastRun)
+							.slice(0, 5),
+						maxActivities = Math.max(...series.map(category => category.activities.length));
 					
-					const days = graphDates.map((date, dateIndex) => ({
-						date: ((new Date(date)).getMonth() + 1) + "/" + (new Date(date)).getDate(),
-						oneRepMax: exercise.activities
-							.filter(activity => +(new Date(activity.runDateOnly)) === date)
-							.map(activity => activity.oneRepMax)
-							.sort((activityA, activityB) => activityB - activityA)[0],
-						setWeights: exercise.activities
-							.filter(activity => +(new Date(activity.runDateOnly)) === date)
-							.map(activity => activity.weight),
-						setReps: exercise.activities
-							.filter(activity => +(new Date(activity.runDateOnly)) === date)
-							.map(activity => activity.reps)
-					}));
-					
-					const graphSize = { width: 350, height: 200, barY: 150, weightHeight: 45, repHeight: 100 },
-						dayWidth = graphSize.width / graphDates.length,
-						barWidth = 5;
-					
-					const oneRepMax = {};
-					oneRepMax.minValue = Math.min(...days.map(date => date.oneRepMax));
-					oneRepMax.maxValue = Math.max(...days.map(date => date.oneRepMax));
-					oneRepMax.minGraph = oneRepMax.minValue - (oneRepMax.minValue * .2);
-					oneRepMax.maxGraph = oneRepMax.maxValue + (oneRepMax.maxValue * .05);
-					oneRepMax.valueHeight = oneRepMax.maxGraph - oneRepMax.minGraph;
-					
-					const oneRepMaxPath = days.map((day, dayIndex) => {
-						const pointX = (dayWidth * dayIndex),
-							pointY = ((oneRepMax.maxGraph - day.oneRepMax) * graphSize.height) / oneRepMax.valueHeight;
 						
-						let path = "";
-						
-						if (dayIndex === 0) {
-							path = "M0,";
-						}
-						else if (dayIndex === days.length - 1) {
-							path = "L" + graphSize.width + ",";
-						}
-						else {
-							path = "L" + (pointX + (dayWidth / 2)) + ",";
-						}
-						
-						path += pointY;
-						
-						return path;
-							
-						}).join(" ");
-					
-					const bars = {};
-					
-					bars.weight = {};
-					bars.weight.minValue = Math.min(...days.flatMap(day => day.setWeights));
-					bars.weight.maxValue = Math.max(...days.flatMap(day => day.setWeights));
-					bars.weight.valueHeight = bars.weight.maxValue - bars.weight.minValue;
-					
-					const weightBars = days.map((day, dayIndex) => ({
-						weights: day.setWeights.map((weight, weightIndex) => {
-							const xLeft = ((dayWidth * dayIndex) + (dayWidth / 2)) - (barWidth * 3),
-								barX = xLeft + (barWidth * weightIndex),
-								barHeight = (weight * graphSize.weightHeight) / bars.weight.maxValue;
-							
-							return "M" + barX + "," + graphSize.barY + 
-								" L" + (barX + barWidth) + "," + graphSize.barY + 
-								" L" + (barX + barWidth) + "," + (graphSize.barY + barHeight) + 
-								" C" + (barX + barWidth) + "," + (graphSize.barY + barHeight + 8) + " " + barX + "," + (graphSize.barY + barHeight + 8) + " " + barX + "," + (graphSize.barY + barHeight);
-						})
-					})).flatMap(day => day.weights);
-					
-					bars.reps = {};
-					bars.reps.minValue = Math.min(...days.flatMap(day => day.setReps));
-					bars.reps.maxValue = Math.max(...days.flatMap(day => day.setReps));
-					bars.reps.valueHeight = bars.reps.maxValue - bars.reps.minValue;
-					
-					const repBars = days.map((day, dayIndex) => ({
-						reps: day.setReps.map((rep, repIndex) => {
-							const xLeft = ((dayWidth * dayIndex) + (dayWidth / 2)) - (barWidth * 3),
-								barX = xLeft + (barWidth * repIndex),
-								barHeight = (rep * graphSize.repHeight) / bars.reps.maxValue;
-							
-							return "M" + barX + "," + graphSize.barY + 
-								(exercise.hasWeight ?
-									" L" + (barX + barWidth) + "," + graphSize.barY
-									: " C" + barX + "," + (graphSize.barY + 3) + " " + (barX + barWidth) + "," + (graphSize.barY + 3) + " " + (barX + barWidth) + "," + graphSize.barY
-									)+ 
-								" L" + (barX + barWidth) + "," + (graphSize.barY - barHeight) + 
-								" C" + (barX + barWidth) + "," + (graphSize.barY - barHeight - 3) + " " + barX + "," + (graphSize.barY - barHeight - 3) + " " + barX + "," + (graphSize.barY -barHeight);
-						})
-					})).flatMap(day => day.reps);
-					
+					const graphSize = { width: 350, height: 200 },
+						padding = { top: 20, bottom: 15 },
+						graphArea = { width: graphSize.width, height: graphSize.height - padding.top - padding.bottom },
+						seriesWidth = graphArea.width / series.length;
+
 					return {
 						...exercise,
 						graph: {
-							days: days,
-							weightBars: exercise.hasWeight ? weightBars : [],
-							repBars: repBars,
-							oneRepMaxPath: exercise.hasWeight ? oneRepMaxPath : "",
-							oneRepMaxPathFill: exercise.hasWeight ? oneRepMaxPath + " L" + graphSize.width + "," + graphSize.height + " L0," + graphSize.height : ""
+							maxActivities: maxActivities,
+							graphSize: graphSize,
+							graphBars: series.map((series, seriesIndex) => ({
+									value: series.value,
+									totalActivities: series.activities.length,
+									lastRun: (series.lastRun.getMonth() + 1) + "/" + series.lastRun.getDate(),
+									center: (seriesWidth * seriesIndex) + (seriesWidth / 2),
+									top: (graphArea.height + padding.top) - ((series.activities.length * graphArea.height) / maxActivities),
+									bottom: graphSize.height - padding.bottom
+								}))
 						}
 					};
 				});
@@ -514,39 +444,21 @@ class WorkoutActivity extends React.Component {
 								</div>
 								
 								<div className="graphContainer">
-									<svg viewBox="0 0 350 200" className="workoutGraph">
-										<defs>
-											<linearGradient spreadMethod="pad" id="oneRepMaxGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-												<stop offset="0%" style={{stopColor: "rgb(255, 255, 255)", stopOpacity: 1}} />
-												<stop offset="100%" style={{stopColor: "rgb(202 236 251)", stopOpacity: 1}} />
-											</linearGradient>
-										</defs>
-										
+
+									<svg viewBox={`0 0 ${ workoutSet.exercise.graph.graphSize.width } ${ workoutSet.exercise.graph.graphSize.height }`} className="workoutGraph">
 										{
-										workoutSet.exercise.graph.oneRepMaxPath ?
-										<g>
-											<path className="stroke" d={ workoutSet.exercise.graph.oneRepMaxPath } />
-											<path className="fill" d={ workoutSet.exercise.graph.oneRepMaxPathFill } fill="url(#oneRepMaxGradient)" />
-										</g>
-										: ""
-										}
-										
-										<g>
-										{
-										workoutSet.exercise.graph.weightBars.map((path, barIndex) => (
-											<path key={ barIndex } className="weightBar" d={ path } />
+										workoutSet.exercise.graph.graphBars.map((bar, barIndex) => (
+											<g key={ barIndex } transform={`translate(${ bar.center })`}>
+												<line x1="0" x2="0" y1={ bar.top } y2={ bar.bottom }></line>
+
+												<text className="seriesHeader" x="0" y={ workoutSet.exercise.graph.graphSize.height } textAnchor="middle" alignmentBaseline="baseline">{ bar.value }</text>
+												<text className="seriesData" x="5" y={ bar.top } textAnchor="start" alignmentBaseline="hanging">{ bar.totalActivities }</text>
+												<text className="seriesHeader" x="0" y="0" textAnchor="middle" alignmentBaseline="hanging">{ bar.lastRun }</text>
+											</g>
 										))
 										}
-										</g>
-										
-										<g>
-										{
-										workoutSet.exercise.graph.repBars.map((path, barIndex) => (
-											<path key={ barIndex } className="repBar" d={ path } />
-										))
-										}
-										</g>
 									</svg>
+									
 								</div>
 								
 								<div className="actionContainer">
