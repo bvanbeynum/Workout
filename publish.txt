@@ -1,2 +1,4 @@
+docker exec -it workoutDev bash
+npm run build
 cp -rf build/* -t ../../prod/workout/client/
 rm -rf build/*
