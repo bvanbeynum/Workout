@@ -1,0 +1,65 @@
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.header h1 {
+	flex: 1;
+}
+
+.header svg {
+	width: 36px;
+	margin: 20px 40px;
+	cursor: pointer;
+	outline: none;
+}
+
+.usersContainer {
+	margin: 0px 20px;
+}
+
+.userContainer {
+	margin-bottom: 20px;
+}
+
+.userInfo {
+	font-weight: bold;
+}
+
+.userDevices {
+	border-collapse: collapse;
+	margin-left: 50px;
+}
+
+.userDevices td {
+	padding: 0px 15px 0px 0px;
+}
+
+.userDevices svg {
+	width: 18px;
+	height: 18px;
+	outline: none;
+	cursor: pointer;
+}
+
+.requests {
+	margin-left: 20px;
+	border-collapse: collapse;
+}
+
+.requests td {
+	padding: 0px 15px 0px 0px;
+	vertical-align: middle;
+}
+
+.requests select {
+	border: 0;
+	border-bottom: 1px solid rgb(180 180 180);
+}
+
+.requests svg {
+	width: 18px;
+	height: 18px;
+	outline: none;
+	cursor: pointer;
+}

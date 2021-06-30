@@ -72,7 +72,7 @@
 	border-collapse: collapse;
 }
 
-th, td {
+.exerciseTable th, .exerciseTable td, .scheduleTable th, .scheduleTable td {
 	font-size: .9em;
 	font-weight: normal;
 	padding: 0px;
@@ -81,19 +81,19 @@ th, td {
 	height: 20px;
 }
 
-th {
+.exerciseTable th, .scheduleTable th {
 	color: rgb(150 150 150);
 }
 
-td {
+.exerciseTable td, .scheduleTable td {
 	border-bottom: 1px solid rgb(220 220 220);
 }
 
-tr:nth-last-child(1) > td {
+.exerciseTable tr:nth-last-child(1) > td, .scheduleTable tr:nth-last-child(1) > td {
 	border-bottom: none;
 }
 
-td:nth-child(1) {
+.exerciseTable td:nth-child(1), .scheduleTable td:nth-child(1) {
 	text-align: left;
 	color: rgb(150 150 150);
 	border-bottom: none;
@@ -101,7 +101,7 @@ td:nth-child(1) {
 	font-size: .8em;
 }
 
-td:nth-child(n+2) {
+.exerciseTable td:nth-child(n+2), .scheduleTable td:nth-child(n+2) {
 	font-size: 1.1em;
 	font-weight: bold;
 	color: rgb(245 92 39);

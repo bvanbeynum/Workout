@@ -15,12 +15,13 @@
 }
 
 .toast.info {
-	border: solid 1px rgb(245 81 28);
-	background-color: rgb(239 176 156);
+	border: solid 2px rgb(104 154 104);
+	background-color: rgb(185 234 200);
 	color: rgb(87, 87, 97);
 }
+
 .toast.error {
-	border: solid 1px rgb(245 81 28);
+	border: solid 2px rgb(245 81 28);
 	background-color: rgb(239 176 156);
 	color: rgb(87, 87, 97);
 }

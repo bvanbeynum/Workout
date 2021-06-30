@@ -9,6 +9,7 @@ import Workout from "./components/Workout";
 import Schedule from "./components/Schedule";
 import WorkoutActivity from "./components/WorkoutActivity";
 import Activity from "./components/Activity";
+import Admin from "./components/Admin";
 import Toast from "./components/Toast";
 
 class App extends React.Component {
@@ -88,6 +89,10 @@ class App extends React.Component {
 				
 				case "schedule":
 					this.setState({ page: <Schedule toast={this.showToast} /> });
+					break;
+				
+				case "admin":
+					this.setState({ page: <Admin toast={this.showToast } /> });
 					break;
 				
 				default:
